@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState, useEffect} from 'react'
+import api from './api'
+import Produto from './components/produto'
 
-function App() {
+
+export default function App() {
+  const [x, setX] = useState([])
+
+  useEffect(async () => {
+      const dados = await api()
+      setX(dados)
+  }, [])
+
+  const lista = x.map(item => ( <Produto dados={item} /> ))
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        Seja bem vindo a minha Steam
       </header>
+
+      <main>
+        <h3>Produtos</h3>
+        <div id="mostruario">
+          {lista}
+        </div>
+      </main>
     </div>
   );
+
 }
 
-export default App;
+
